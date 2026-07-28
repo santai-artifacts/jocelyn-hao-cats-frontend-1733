@@ -9,22 +9,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --cream: #FEF6EE;
-      --warm-white: #FFFAF5;
-      --peach-light: #FFF0E0;
-      --primary: #C96442;
-      --primary-light: #E8855F;
-      --primary-dark: #A84E30;
-      --gold: #E8AA6A;
-      --gold-light: #F8DEB8;
-      --dark: #3A1F0E;
-      --text: #5C3A28;
-      --muted: #9B7460;
-      --sage: #6B9E6B;
-      --sage-light: #E8F2E8;
-      --border: #EDD5C5;
-      --shadow: rgba(90,40,10,0.08);
-      --shadow-md: rgba(90,40,10,0.16);
+      --cream: #EFF7FB;
+      --warm-white: #F5FBFE;
+      --peach-light: #E2F1F7;
+      --primary: #0E7490;
+      --primary-light: #1A9CB5;
+      --primary-dark: #0A5570;
+      --gold: #C9953A;
+      --gold-light: #F0DFA8;
+      --dark: #0C2A3A;
+      --text: #1D465A;
+      --muted: #5A8FA8;
+      --sage: #2A9BAD;
+      --sage-light: #D9F0F5;
+      --border: #B8D8E8;
+      --shadow: rgba(10,50,80,0.08);
+      --shadow-md: rgba(10,50,80,0.16);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,7 +35,7 @@
     /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 200;
-      background: rgba(254,246,238,0.96);
+      background: rgba(239,247,251,0.96);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border);
     }
@@ -81,7 +81,7 @@
 
     /* ── HERO ── */
     .hero {
-      background: linear-gradient(135deg, #FFF0E0 0%, #FEF6EE 60%, #FFF8F0 100%);
+      background: linear-gradient(135deg, #D9EFF8 0%, #EFF7FB 60%, #F5FBFE 100%);
       padding: 6rem 2rem 4.5rem; text-align: center; position: relative; overflow: hidden;
     }
     .hero::before {
@@ -183,13 +183,13 @@
     .cat-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
 
     .cat-tag { padding: .2rem .7rem; border-radius: 50px; font-size: .74rem; font-weight: 700; }
-    .cat-tag.playful   { background: #FEE9E1; color: #C04A20; }
-    .cat-tag.cuddly    { background: #FDE8F0; color: #A0205A; }
-    .cat-tag.calm      { background: #E3EEF8; color: #1A5A8A; }
-    .cat-tag.gentle    { background: var(--sage-light); color: #3A6A3A; }
-    .cat-tag.independent { background: #F0EAF8; color: #5A2A8A; }
-    .cat-tag.kitten    { background: #FFF0D0; color: #8A5A00; }
-    .cat-tag.senior    { background: #E8F0FF; color: #2A3A8A; }
+    .cat-tag.playful   { background: #D4EDF8; color: #0A5570; }
+    .cat-tag.cuddly    { background: #D9F0F5; color: #0A6A7A; }
+    .cat-tag.calm      { background: #DFF0E8; color: #1A6A48; }
+    .cat-tag.gentle    { background: #E8F5D8; color: #3A6020; }
+    .cat-tag.independent { background: #EAE4F8; color: #42208A; }
+    .cat-tag.kitten    { background: #FEF3C7; color: #8A5A00; }
+    .cat-tag.senior    { background: #E8EFF8; color: #1A3A7A; }
 
     .cat-meet-btn {
       width: 100%; padding: .65rem; background: var(--primary); color: white;
