@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whisker Haven Rescue · Find Your Purrfect Match</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #FEF6EE;
+      --warm-white: #FFFAF5;
+      --peach-light: #FFF0E0;
+      --primary: #C96442;
+      --primary-light: #E8855F;
+      --primary-dark: #A84E30;
+      --gold: #E8AA6A;
+      --gold-light: #F8DEB8;
+      --dark: #3A1F0E;
+      --text: #5C3A28;
+      --muted: #9B7460;
+      --sage: #6B9E6B;
+      --sage-light: #E8F2E8;
+      --border: #EDD5C5;
+      --shadow: rgba(90,40,10,0.08);
+      --shadow-md: rgba(90,40,10,0.16);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--dark); line-height: 1.25; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(254,246,238,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between; height: 68px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700;
+      color: var(--dark); text-decoration: none; display: flex; align-items: center; gap: .5rem;
+    }
+    .nav-links { display: flex; list-style: none; gap: 2rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: .93rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary) !important; color: white !important;
+      padding: .5rem 1.3rem; border-radius: 50px; transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--primary-dark) !important; }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      flex-direction: column; gap: 5px; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--dark); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: absolute; top: 68px; left: 0; right: 0;
+      background: var(--warm-white); border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      flex-direction: column; gap: .75rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      text-decoration: none; color: var(--text); font-weight: 600; font-size: 1rem; padding: .4rem 0;
+    }
+    .mobile-menu .nav-cta { text-align: center; border-radius: 10px; padding: .7rem 1rem; margin-top: .25rem; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #FFF0E0 0%, #FEF6EE 60%, #FFF8F0 100%);
+      padding: 6rem 2rem 4.5rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '🐾'; position: absolute; font-size: 22rem; opacity: .035;
+      top: -3rem; left: -3rem; transform: rotate(-20deg); pointer-events: none;
+    }
+    .hero::after {
+      content: '🐾'; position: absolute; font-size: 14rem; opacity: .035;
+      bottom: -1rem; right: 2rem; transform: rotate(15deg); pointer-events: none;
+    }
+    .hero-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block; background: var(--gold-light); color: var(--primary-dark);
+      font-size: .8rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase;
+      padding: .35rem 1rem; border-radius: 50px; margin-bottom: 1.4rem;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 3.75rem); margin-bottom: 1.25rem; }
+    .hero h1 em { color: var(--primary); font-style: italic; }
+    .hero p { font-size: 1.1rem; color: var(--text); max-width: 520px; margin: 0 auto 2.5rem; }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--primary); color: white; padding: .85rem 2rem; border-radius: 50px;
+      text-decoration: none; font-weight: 700; font-size: 1rem; transition: all .2s;
+      border: none; cursor: pointer; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,100,66,.35); }
+    .btn-outline {
+      background: transparent; color: var(--primary); padding: .85rem 2rem; border-radius: 50px;
+      text-decoration: none; font-weight: 700; font-size: 1rem; transition: all .2s;
+      border: 2px solid var(--primary); cursor: pointer; display: inline-block;
+    }
+    .btn-outline:hover { background: var(--primary); color: white; transform: translateY(-2px); }
+
+    .hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 3.5rem; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.1rem; font-weight: 700; color: var(--primary); }
+    .stat-label { font-size: .82rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .07em; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5.5rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: block; font-size: .75rem; font-weight: 800; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--primary); margin-bottom: .75rem;
+    }
+    .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+    .section-subtitle { font-size: 1.05rem; color: var(--muted); max-width: 540px; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--warm-white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-image-side { position: relative; padding-bottom: 1.5rem; padding-right: 1.5rem; }
+    .about-main-img { width: 100%; border-radius: 24px; display: block; box-shadow: 0 14px 48px var(--shadow-md); aspect-ratio: 4/3; object-fit: cover; }
+    .about-badge-img {
+      position: absolute; bottom: 0; right: 0; width: 120px; height: 120px;
+      border-radius: 50%; border: 4px solid white; box-shadow: 0 8px 28px var(--shadow-md); object-fit: cover;
+    }
+    .about-text h2 { margin-bottom: 1.25rem; }
+    .about-text p { color: var(--text); margin-bottom: 1rem; }
+    .values-list { list-style: none; margin-top: 1.75rem; }
+    .values-list li { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: 1rem; font-size: .95rem; }
+    .values-list .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
+
+    /* ── CATS ── */
+    .cats { background: var(--cream); }
+    .cats-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1.5rem; }
+    .filter-tabs { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .filter-tab {
+      padding: .45rem 1.1rem; border-radius: 50px; border: 1.5px solid var(--border);
+      background: white; color: var(--text); font-size: .875rem; font-weight: 700;
+      cursor: pointer; font-family: 'Nunito', sans-serif; transition: all .2s;
+    }
+    .filter-tab:hover, .filter-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .cats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 1.75rem; }
+    .cat-card {
+      background: var(--warm-white); border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 18px var(--shadow); transition: transform .25s, box-shadow .25s; cursor: pointer;
+    }
+    .cat-card:hover { transform: translateY(-6px); box-shadow: 0 14px 36px var(--shadow-md); }
+    .cat-card.hidden { display: none; }
+
+    .cat-img-wrap { position: relative; height: 220px; overflow: hidden; background: var(--peach-light); }
+    .cat-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; display: block; }
+    .cat-card:hover .cat-img-wrap img { transform: scale(1.06); }
+    .cat-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+
+    .cat-status {
+      position: absolute; top: .75rem; right: .75rem;
+      padding: .25rem .75rem; border-radius: 50px; font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em;
+    }
+    .cat-status.available { background: #D1F0D1; color: #2A6E2A; }
+    .cat-status.pending { background: #FEE9CC; color: #B36200; }
+
+    .cat-body { padding: 1.25rem; }
+    .cat-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: .2rem; }
+    .cat-meta { font-size: .84rem; color: var(--muted); margin-bottom: .8rem; }
+    .cat-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+
+    .cat-tag { padding: .2rem .7rem; border-radius: 50px; font-size: .74rem; font-weight: 700; }
+    .cat-tag.playful   { background: #FEE9E1; color: #C04A20; }
+    .cat-tag.cuddly    { background: #FDE8F0; color: #A0205A; }
+    .cat-tag.calm      { background: #E3EEF8; color: #1A5A8A; }
+    .cat-tag.gentle    { background: var(--sage-light); color: #3A6A3A; }
+    .cat-tag.independent { background: #F0EAF8; color: #5A2A8A; }
+    .cat-tag.kitten    { background: #FFF0D0; color: #8A5A00; }
+    .cat-tag.senior    { background: #E8F0FF; color: #2A3A8A; }
+
+    .cat-meet-btn {
+      width: 100%; padding: .65rem; background: var(--primary); color: white;
+      border: none; border-radius: 10px; font-family: 'Nunito', sans-serif;
+      font-weight: 700; font-size: .9rem; cursor: pointer; transition: background .2s;
+    }
+    .cat-meet-btn:hover { background: var(--primary-dark); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(30,10,0,.55);
+      z-index: 500; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--warm-white); border-radius: 24px; max-width: 540px; width: 100%;
+      overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,.28);
+      animation: popIn .28s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes popIn { from { transform: scale(.88); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-img { width: 100%; height: 260px; object-fit: cover; display: block; background: var(--peach-light); }
+    .modal-body { padding: 1.75rem; }
+    .modal-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: .2rem; }
+    .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1; padding: .2rem; }
+    .modal-close:hover { color: var(--dark); }
+    .modal-body h3 { font-size: 1.9rem; }
+    .modal-meta { color: var(--muted); font-size: .88rem; margin-bottom: 1rem; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
+    .modal-desc { color: var(--text); font-size: .94rem; line-height: 1.75; margin-bottom: 1.5rem; }
+    .modal-adopt-btn {
+      width: 100%; padding: .9rem; background: var(--primary); color: white;
+      border: none; border-radius: 12px; font-family: 'Nunito', sans-serif;
+      font-weight: 700; font-size: 1rem; cursor: pointer; transition: background .2s;
+    }
+    .modal-adopt-btn:hover { background: var(--primary-dark); }
+
+    /* ── FORM ── */
+    .form-section { background: var(--peach-light); }
+    .form-wrap { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
+    .form-intro p { color: var(--text); margin-top: 1rem; margin-bottom: 1.75rem; }
+    .process-steps { list-style: none; counter-reset: steps; }
+    .process-steps li { counter-increment: steps; display: flex; gap: 1rem; margin-bottom: 1.1rem; align-items: flex-start; }
+    .process-steps li::before {
+      content: counter(steps); background: var(--primary); color: white; min-width: 28px; height: 28px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: .82rem; flex-shrink: 0;
+    }
+    .step-text strong { display: block; color: var(--dark); font-size: .93rem; }
+    .step-text span { font-size: .84rem; color: var(--muted); }
+
+    .adoption-form { background: white; border-radius: 20px; padding: 2rem; box-shadow: 0 6px 24px var(--shadow); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: .85rem; font-weight: 700; color: var(--dark); margin-bottom: .4rem; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: .7rem 1rem; border: 1.5px solid var(--border); border-radius: 10px;
+      font-family: 'Nunito', sans-serif; font-size: .95rem; color: var(--text); background: var(--cream);
+      transition: border-color .2s, box-shadow .2s; outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(201,100,66,.12); background: white; }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%; padding: .9rem; background: var(--primary); color: white; border: none;
+      border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 1rem;
+      cursor: pointer; transition: all .2s; margin-top: .25rem;
+    }
+    .form-submit:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,100,66,.3); }
+    .form-success { display: none; text-align: center; padding: 2.5rem 1.5rem; }
+    .success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .form-success h3 { margin-bottom: .75rem; }
+    .form-success p { color: var(--muted); font-size: .95rem; }
+
+    /* ── FAQ ── */
+    .faq { background: var(--warm-white); }
+    .faq-header { text-align: center; margin-bottom: 3rem; }
+    .faq-header .section-subtitle { margin: 0 auto; }
+    .faq-grid { max-width: 760px; margin: 0 auto; }
+    .faq-item { border: 1.5px solid var(--border); border-radius: 14px; margin-bottom: .75rem; background: white; }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 1.5rem; cursor: pointer; font-weight: 700; font-size: .94rem;
+      color: var(--dark); list-style: none; gap: 1rem; user-select: none;
+    }
+    .faq-question::marker, .faq-question::-webkit-details-marker { display: none; }
+    .faq-icon { font-size: 1.3rem; color: var(--primary); flex-shrink: 0; transition: transform .25s; font-style: normal; font-family: 'Nunito', sans-serif; font-weight: 300; }
+    details[open] .faq-icon { transform: rotate(45deg); }
+    .faq-answer { padding: 0 1.5rem 1.15rem; font-size: .92rem; color: var(--text); line-height: 1.75; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); color: rgba(255,248,240,.7); padding: 4rem 2rem 2rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand .logo { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #FFF8F0; margin-bottom: .8rem; display: block; }
+    .footer-brand p { font-size: .88rem; line-height: 1.7; }
+    .footer-col h4 { font-family: 'Nunito', sans-serif; font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: #FFF8F0; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: .5rem; }
+    .footer-col ul a { color: rgba(255,248,240,.6); text-decoration: none; font-size: .88rem; transition: color .2s; }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,248,240,.1); padding-top: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center; font-size: .84rem; flex-wrap: wrap; gap: .5rem;
+    }
+    .footer-heart { color: var(--primary-light); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--dark); color: #FFF8F0; padding: .9rem 1.75rem; border-radius: 50px;
+      font-weight: 600; font-size: .93rem; z-index: 9999; white-space: nowrap;
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-grid, .form-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .about-image-side { max-width: 440px; }
+    }
+    @media (max-width: 560px) {
+      section { padding: 3.5rem 1.25rem; }
+      .hero { padding: 4rem 1.25rem 3rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.75rem; }
+      .cats-header { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">🐾 Whisker Haven</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#cats">Our Cats</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#adopt" class="nav-cta">Adopt Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#cats">Our Cats</a>
+    <a href="#faq">FAQ</a>
+    <a href="#adopt" class="nav-cta">Adopt Now</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">🏠 Open for Adoption</span>
+    <h1>Find Your <em>Purrfect</em><br>Companion</h1>
+    <p>Every cat at Whisker Haven has a story, a personality, and a whole lot of love to give. Let's help you find the one who's been waiting for you.</p>
+    <div class="hero-btns">
+      <a href="#cats" class="btn-primary">Meet Our Cats</a>
+      <a href="#about" class="btn-outline">Our Story</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">240+</div>
+        <div class="stat-label">Cats Adopted</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Available Now</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8 yrs</div>
+        <div class="stat-label">Rescuing Since</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-image-side">
+        <img
+          src="https://images.unsplash.com/photo-1514888286974-cd69a9a2c4a0?w=700&q=80&auto=format&fit=crop"
+          alt="A cozy cat resting at the Whisker Haven shelter"
+          class="about-main-img"
+          onerror="this.style.display='none'"
+        >
+        <img
+          src="https://images.unsplash.com/photo-1596854407944-bf54cc879a6a?w=200&q=80&auto=format&fit=crop&crop=face"
+          alt="Happy adopted cat"
+          class="about-badge-img"
+          onerror="this.style.display='none'"
+        >
+      </div>
+      <div class="about-text">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">A cozy home for cats who need one</h2>
+        <p>Whisker Haven began in 2018 when founder Emma Clarke fostered her first litter of kittens and never really stopped. What started in a spare bedroom grew into a full rescue dedicated to finding warm, loving homes for cats of all ages.</p>
+        <p>We're a small, volunteer-run shelter based in Portland, OR. Every cat in our care lives in a real foster home — never a cage — so they arrive socialized, confident, and ready for yours.</p>
+        <ul class="values-list">
+          <li><span class="icon">🏡</span><span>Foster-based care — our cats live in homes, not kennels</span></li>
+          <li><span class="icon">💉</span><span>All cats are vaccinated, spayed/neutered & microchipped</span></li>
+          <li><span class="icon">🤝</span><span>Lifetime support — we're here long after adoption day</span></li>
+          <li><span class="icon">🌿</span><span>No-kill, values-first rescue since 2018</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CATS ── -->
+<section class="cats" id="cats">
+  <div class="section-inner">
+    <div class="cats-header">
+      <div>
+        <span class="section-label">Available Now</span>
+        <h2 class="section-title">Meet Our Cats</h2>
+      </div>
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">All Cats</button>
+        <button class="filter-tab" data-filter="kitten">Kittens</button>
+        <button class="filter-tab" data-filter="playful">Playful</button>
+        <button class="filter-tab" data-filter="calm">Calm</button>
+        <button class="filter-tab" data-filter="senior">Senior</button>
+      </div>
+    </div>
+    <div class="cats-grid" id="catsGrid"></div>
+  </div>
+</section>
+
+<!-- ── MODAL ── -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+  <div class="modal" id="catModal">
+    <img src="" alt="" class="modal-img" id="modalImg">
+    <div class="modal-body">
+      <div class="modal-top">
+        <h3 id="modalName"></h3>
+        <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-tags" id="modalTags"></div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <button class="modal-adopt-btn" id="modalAdoptBtn">Start My Adoption Application →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── ADOPTION FORM ── -->
+<section class="form-section" id="adopt">
+  <div class="section-inner">
+    <div class="form-wrap">
+      <div class="form-intro">
+        <span class="section-label">Apply Today</span>
+        <h2 class="section-title">Start Your<br>Adoption Journey</h2>
+        <p>We believe every cat deserves a thoughtful match. Our process is thorough but friendly — most families hear back within 2–3 business days.</p>
+        <ol class="process-steps">
+          <li><div class="step-text"><strong>Fill out this form</strong><span>Tell us about yourself and your home</span></div></li>
+          <li><div class="step-text"><strong>Meet your match</strong><span>We'll schedule a meet-and-greet with your chosen cat</span></div></li>
+          <li><div class="step-text"><strong>Home check</strong><span>A quick virtual or in-person visit to ensure a safe fit</span></div></li>
+          <li><div class="step-text"><strong>Welcome home 🎉</strong><span>Your new companion comes with a starter kit & full support</span></div></li>
+        </ol>
+      </div>
+
+      <div class="adoption-form">
+        <form id="adoptionForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" placeholder="Emma" required>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" placeholder="Clarke" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" placeholder="emma@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="(503) 555-0100">
+          </div>
+          <div class="form-group">
+            <label for="city">City & State *</label>
+            <input type="text" id="city" placeholder="Portland, OR" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="housing">Housing Type *</label>
+              <select id="housing" required>
+                <option value="">Select…</option>
+                <option>House</option>
+                <option>Apartment</option>
+                <option>Condo</option>
+                <option>Townhouse</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="ownership">Own or Rent? *</label>
+              <select id="ownership" required>
+                <option value="">Select…</option>
+                <option>Own</option>
+                <option>Rent (with pet permission)</option>
+                <option>Rent (checking on permission)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="catInterest">Which cat interests you? *</label>
+            <select id="catInterest" required>
+              <option value="">Select a cat…</option>
+              <option>Luna</option>
+              <option>Mochi</option>
+              <option>Duchess</option>
+              <option>Biscuit</option>
+              <option>Maple</option>
+              <option>Stormy</option>
+              <option>Not sure — help me find a match!</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="otherPets">Other pets at home?</label>
+            <input type="text" id="otherPets" placeholder="e.g. 1 calm dog, cat-friendly — or none">
+          </div>
+          <div class="form-group">
+            <label for="whyAdopt">Why do you want to adopt? *</label>
+            <textarea id="whyAdopt" placeholder="Tell us about your lifestyle and what you're hoping for in a cat companion…" required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Submit My Application 🐾</button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">🎉</div>
+          <h3>Application Received!</h3>
+          <p>Thank you! We'll review your application and reach out within 2–3 business days. Keep an eye on your inbox — your purrfect match is just around the corner.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq" id="faq">
+  <div class="section-inner">
+    <div class="faq-header">
+      <span class="section-label">Got Questions?</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-subtitle">Everything you need to know about adopting from Whisker Haven.</p>
+    </div>
+    <div class="faq-grid">
+      <details class="faq-item">
+        <summary class="faq-question">How long does the adoption process take? <i class="faq-icon">+</i></summary>
+        <p class="faq-answer">Most adoptions complete within one to two weeks from application to homecoming. After submitting your form, we review it within 2–3 business days, schedule a meet-and-greet, and do a quick home check. We move at a pace comfortable for both you and the cat.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">What is the adoption fee? <i class="faq-icon">+</i></summary>
+        <p class="faq-answer">Our fee is $125 for adult cats (1+ years) and $175 for kittens under 1 year. Senior cats (7+) are $75. Fees cover spay/neuter, microchipping, all vaccinations, a flea treatment, and a starter pack with food and essentials to help your new cat settle in.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Can I meet the cat before committing? <i class="faq-icon">+</i></summary>
+        <p class="faq-answer">Absolutely — we encourage it! After your application is approved, we'll arrange a meet-and-greet at the foster home. You can spend time with the cat, ask the foster family questions, and get a genuine feel for the cat's personality before making any decision.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Do you adopt outside of Portland? <i class="faq-icon">+</i></summary>
+        <p class="faq-answer">We adopt within a 100-mile radius of Portland, OR. Out-of-area applications are considered case by case, especially for cats who've struggled to find a local match. Contact us to discuss your situation — we're flexible for the right fit.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Are cats good with kids or other animals? <i class="faq-icon">+</i></summary>
+        <p class="faq-answer">Each cat's profile includes notes on compatibility with children, dogs, and other cats — based on real observations from their foster stay, not guesses. Tell us about your household in the application and we'll help match you with a cat who'll thrive there.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">What support do you offer after adoption? <i class="faq-icon">+</i></summary>
+        <p class="faq-answer">We're here for the lifetime of your cat. You'll have direct access to your foster family for the first 30 days, and our team is reachable by email any time for behavior questions, vet recommendations, or to share a great photo (we love those). You're never on your own after adoption day.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo">🐾 Whisker Haven Rescue</span>
+        <p>A foster-based cat rescue serving Portland, OR and the surrounding community. Every cat deserves a cozy home — let's find yours.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#about">Our Story</a></li>
+          <li><a href="#cats">Meet Our Cats</a></li>
+          <li><a href="#adopt">Apply to Adopt</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <ul>
+          <li><a href="mailto:hello@whiskerhaven.org">hello@whiskerhaven.org</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Volunteer with us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Whisker Haven Rescue · Portland, OR</span>
+      <span>Made with <span class="footer-heart">♥</span> for cats everywhere</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  /* ── CAT DATA ── */
+  const cats = [
+    {
+      id: 1,
+      name: 'Luna',
+      age: '2 years',
+      gender: 'Female',
+      color: 'Black shorthair',
+      status: 'available',
+      tags: ['playful', 'cuddly'],
+      img: 'https://images.unsplash.com/photo-1511044568932-338cba0ad803?w=600&q=80&auto=format&fit=crop',
+      emoji: '🐈‍⬛',
+      desc: "Luna is a midnight-black gem who loves to zoom at 3am and then collapse on your chest demanding cuddles. She gets along great with calm dogs and adores interactive toys. She will absolutely judge you if you sleep past 7."
+    },
+    {
+      id: 2,
+      name: 'Mochi',
+      age: '5 months',
+      gender: 'Male',
+      color: 'Orange tabby',
+      status: 'available',
+      tags: ['kitten', 'playful'],
+      img: 'https://images.unsplash.com/photo-1574158622682-e5645c6d26e4?w=600&q=80&auto=format&fit=crop',
+      emoji: '🐱',
+      desc: "Mochi is an absolute chaos gremlin in the best way possible. Found abandoned near a food truck (hence the name), he's been stealing hearts ever since. Amazing with kids, other cats, and anything made of yarn."
+    },
+    {
+      id: 3,
+      name: 'Duchess',
+      age: '7 years',
+      gender: 'Female',
+      color: 'Blue-grey longhair',
+      status: 'available',
+      tags: ['calm', 'senior', 'gentle'],
+      img: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600&q=80&auto=format&fit=crop',
+      emoji: '🩶',
+      desc: "Duchess was surrendered when her owner moved abroad, and it's frankly their loss. She is sophisticated: she enjoys window perches, receiving exactly 12 chin scratches, and watching birds with scholarly intensity."
+    },
+    {
+      id: 4,
+      name: 'Biscuit',
+      age: '1 year',
+      gender: 'Male',
+      color: 'Cream & white',
+      status: 'pending',
+      tags: ['cuddly', 'gentle'],
+      img: 'https://images.unsplash.com/photo-1596854407944-bf54cc879a6a?w=600&q=80&auto=format&fit=crop',
+      emoji: '🍞',
+      desc: "Biscuit is the loaf of your dreams — he spends a shocking amount of time in perfect loaf formation. He's gentle, easy-going, and produces the loudest purr you've ever heard in a 3 kg body. He loves laps and slow mornings."
+    },
+    {
+      id: 5,
+      name: 'Maple',
+      age: '3 years',
+      gender: 'Female',
+      color: 'Calico',
+      status: 'available',
+      tags: ['independent', 'gentle'],
+      img: 'https://images.unsplash.com/photo-1529736576495-1067da6fb0e1?w=600&q=80&auto=format&fit=crop',
+      emoji: '🍁',
+      desc: "Maple is the cat for someone who appreciates independence. She's affectionate on her own schedule, endlessly watchable, and deeply respectful of personal space — expecting the same in return. Best for quieter homes."
+    },
+    {
+      id: 6,
+      name: 'Stormy',
+      age: '4 years',
+      gender: 'Male',
+      color: 'Grey tabby',
+      status: 'available',
+      tags: ['playful', 'independent'],
+      img: 'https://images.unsplash.com/photo-1513245543132-31f507417b26?w=600&q=80&auto=format&fit=crop',
+      emoji: '⛈️',
+      desc: "Stormy earned his name by arriving as a soaked, dramatic stray during a thunderstorm. He has since dried off and become a confident, clever cat who loves puzzle feeders, window watching, and yelling at birds."
+    }
+  ];
+
+  /* ── TAG HTML ── */
+  function tagHTML(tag) {
+    return `<span class="cat-tag ${tag}">${tag.charAt(0).toUpperCase() + tag.slice(1)}</span>`;
+  }
+
+  /* ── RENDER CARDS ── */
+  function renderCats() {
+    const grid = document.getElementById('catsGrid');
+    grid.innerHTML = cats.map(cat => `
+      <article class="cat-card" data-id="${cat.id}" data-tags="${cat.tags.join(',')}">
+        <div class="cat-img-wrap">
+          <img
+            src="${cat.img}"
+            alt="${cat.name}, a ${cat.color} cat available for adoption"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          >
+          <div class="cat-img-placeholder" style="display:none">${cat.emoji}</div>
+          <span class="cat-status ${cat.status}">${cat.status === 'available' ? '✓ Available' : '⏳ Pending'}</span>
+        </div>
+        <div class="cat-body">
+          <div class="cat-name">${cat.name}</div>
+          <div class="cat-meta">${cat.age} · ${cat.gender} · ${cat.color}</div>
+          <div class="cat-tags">${cat.tags.map(tagHTML).join('')}</div>
+          <button class="cat-meet-btn" onclick="openModal(${cat.id})">Meet ${cat.name} →</button>
+        </div>
+      </article>
+    `).join('');
+  }
+
+  renderCats();
+
+  /* ── FILTER ── */
+  document.getElementById('filterTabs').addEventListener('click', e => {
+    const btn = e.target.closest('.filter-tab');
+    if (!btn) return;
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.cat-card').forEach(card => {
+      const tags = card.dataset.tags.split(',');
+      card.classList.toggle('hidden', filter !== 'all' && !tags.includes(filter));
+    });
+  });
+
+  /* ── MODAL ── */
+  function openModal(id) {
+    const cat = cats.find(c => c.id === id);
+    const img = document.getElementById('modalImg');
+    img.src = cat.img;
+    img.alt = cat.name;
+    img.onerror = () => { img.style.display = 'none'; };
+    img.style.display = 'block';
+    document.getElementById('modalName').textContent = cat.name;
+    document.getElementById('modalMeta').textContent = `${cat.age} · ${cat.gender} · ${cat.color} · ${cat.status === 'available' ? '✓ Available' : '⏳ Pending'}`;
+    document.getElementById('modalTags').innerHTML = cat.tags.map(tagHTML).join('');
+    document.getElementById('modalDesc').textContent = cat.desc;
+    document.getElementById('modalAdoptBtn').onclick = () => {
+      closeModal();
+      document.getElementById('catInterest').value = cat.name;
+      document.getElementById('adopt').scrollIntoView({ behavior: 'smooth' });
+    };
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modalClose').focus();
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  /* ── FORM ── */
+  document.getElementById('adoptionForm').addEventListener('submit', e => {
+    e.preventDefault();
+    document.getElementById('adoptionForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    showToast('🐾 Application submitted! We\'ll be in touch soon.');
+  });
+
+  /* ── TOAST ── */
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  /* ── HAMBURGER ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', open);
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
